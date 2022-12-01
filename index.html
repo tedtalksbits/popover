@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            /* :root {
+                --dark-surface-900: rgb(23, 26, 28);
+                --dark-surface-500: rgb(34, 40, 42);
+                --dark-surface-100: rgb(44, 52, 54);
+                --dark-surface-50: rgb(55, 65, 68);
+                --dark-surface-25: rgb(69, 79, 84);
+                --dark-surface-10: rgb(77, 89, 94);
+                --dark-surface-1: rgb(99, 113, 120);
+                --light-surface-900: #ffffff;
+                --light-surface-500: rgb(245, 245, 245);
+                --light-surface-100: rgb(235, 235, 235);
+                --light-surface-50: rgb(225, 225, 225);
+                --light-surface-25: rgb(215, 215, 215);
+                --light-surface-10: rgb(205, 205, 205);
+                --light-surface-1: rgb(195, 195, 195);
+            } */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            p,
+            figure,
+            blockquote,
+            dl,
+            dd {
+                margin: 0;
+            }
+            /* .pop-container {
+                position: relative;
+                cursor: pointer;
+            }
+            .pop-up.dark {
+                background-color: var(--dark-surface-900);
+                color: var(--light-surface-900);
+                border-color: var(--dark-surface-500);
+            }
+            .pop-up {
+                position: absolute;
+                top: 1.5rem;
+                left: 0;
+                max-width: 300px;
+                height: fit-content;
+                padding: 0.5rem;
+                border: 1px solid;
+                border-color: var(--light-surface-500);
+                background-color: var(--light-surface-900);
+                color: var(--dark-surface-900);
+                border-radius: 1rem;
+                z-index: 1;
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.3s ease-in-out 0.25s;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                transform: translateY(0.25rem);
+                transform: scale(0.95);
+            }
+            .pop-up.dark::before {
+                content: '';
+                position: absolute;
+                top: -0.5rem;
+                left: 1rem;
+                width: 0;
+                height: 0;
+                border-left: 0.5rem solid transparent;
+                border-right: 0.5rem solid transparent;
+                border-bottom: 0.5rem solid var(--dark-surface-900);
+            }
+            .pop-up::before {
+                content: '';
+                position: absolute;
+                top: -0.5rem;
+                left: 1rem;
+                width: 0;
+                height: 0;
+                border-left: 0.5rem solid transparent;
+                border-right: 0.5rem solid transparent;
+                border-bottom: 0.5rem solid var(--light-surface-900);
+            }
+            .pop-up.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                transform: scale(1);
+            } */
+        </style>
+    </head>
+    <body>
+        <div class="pop-container">
+            <div class="pop-trigger" data-popup="true" data-popuptarget="p1">
+                Hover me to see the popup
+            </div>
+            <div class="pop-up" id="p1">
+                <div class="pop-up__header">
+                    <h1 class="pop-up__title">Title</h1>
+                </div>
+                <div class="pop-up__body">
+                    <p class="pop-up__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, quae.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="pop-container">
+            <div class="pop-trigger" data-popup="true" data-popuptarget="p2">
+                Hover me to see the popup
+            </div>
+            <div class="pop-up" id="p2">
+                <div class="pop-up__header">
+                    <h1 class="pop-up__title">Title</h1>
+                </div>
+                <div class="pop-up__body">
+                    <p class="pop-up__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, quae. p2
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script>
+            const popups = document.querySelectorAll('[data-popup="true"]');
+            let targetHeight = 0;
+            // create css classes
+            const dark = document.createElement('style');
+
+            popups.forEach((popup) => {
+                popup.addEventListener('mouseenter', () => {
+                    const target = popup.dataset.popuptarget;
+                    const popupTarget = document.getElementById(target);
+                    // get target height
+                    targetHeight = popup.offsetHeight;
+                    // set top position of popup to target height + 2
+                    popupTarget.style.top = `${targetHeight + 2}px`;
+                    popupTarget.classList.add('active');
+                });
+                popup.addEventListener('mouseleave', () => {
+                    const target = popup.dataset.popuptarget;
+                    const popupTarget = document.getElementById(target);
+                    popupTarget.classList.remove('active');
+                });
+            });
+            dark.innerHTML = `
+                :root {
+                    --dark-surface-900: rgb(23, 26, 28);
+                    --dark-surface-500: rgb(34, 40, 42);
+                    --dark-surface-100: rgb(44, 52, 54);
+                    --dark-surface-50: rgb(55, 65, 68);
+                    --dark-surface-25: rgb(69, 79, 84);
+                    --dark-surface-10: rgb(77, 89, 94);
+                    --dark-surface-1: rgb(99, 113, 120);
+                    --light-surface-900: #ffffff;
+                    --light-surface-500: rgb(245, 245, 245);
+                    --light-surface-100: rgb(235, 235, 235);
+                    --light-surface-50: rgb(225, 225, 225);
+                    --light-surface-25: rgb(215, 215, 215);
+                    --light-surface-10: rgb(205, 205, 205);
+                    --light-surface-1: rgb(195, 195, 195);
+                }
+                .pop-container {
+                    position: relative;
+                    cursor: pointer;
+                }
+                .pop-up.dark {
+                    background-color: var(--dark-surface-900);
+                    color: var(--light-surface-900);
+                    border-color: var(--dark-surface-500);
+                }
+                .pop-up {
+                    position: absolute;
+                    top: ${targetHeight}px;
+                    left: 0;
+                    max-width: 300px;
+                    height: fit-content;
+                    padding: 0.5rem;
+                    border: 1px solid;
+                    border-color: var(--light-surface-500);
+                    background-color: var(--light-surface-900);
+                    color: var(--dark-surface-900);
+                    border-radius: 1rem;
+                    z-index: 1;
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: all 0.3s ease-in-out 0.25s;
+                    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                    transform: translateY(0.25rem);
+                    transform: scale(0.95);
+                }
+                .pop-up.dark::before {
+                    content: '';
+                    position: absolute;
+                    top: -0.5rem;
+                    left: 1rem;
+                    width: 0;
+                    height: 0;
+                    border-left: 0.5rem solid transparent;
+                    border-right: 0.5rem solid transparent;
+                    border-bottom: 0.5rem solid var(--dark-surface-900);
+                }
+                .pop-up::before {
+                    content: '';
+                    position: absolute;
+                    top: -0.5rem;
+                    left: 1rem;
+                    width: 0;
+                    height: 0;
+                    border-left: 0.5rem solid transparent;
+                    border-right: 0.5rem solid transparent;
+                    border-bottom: 0.5rem solid var(--light-surface-900);
+                }
+                .pop-up.active {
+                    visibility: visible;
+                    opacity: 1;
+                    transform: translateY(0);
+                    transform: scale(1);
+                }
+            `;
+            document.head.appendChild(dark);
+        </script>
+    </body>
+</html>
